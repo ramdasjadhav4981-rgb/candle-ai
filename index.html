@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>Candle AI</title>
+<style>
+:root{--bg:#0b1220;--panel:#111c2e;--panel2:#17243a;--line:#263650;--text:#eef4ff;--muted:#9aabc4;--green:#35d39a;--red:#ff6b78;--blue:#75a7ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+.app{max-width:760px;margin:auto;min-height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
+header{display:flex;align-items:center;gap:11px;padding:16px 2px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#1a8b70,#183d5a);display:grid;place-items:center;font-size:22px}
+.brand{font-weight:800;letter-spacing:.4px}.sub{font-size:12px;color:var(--muted)}.status{margin-left:auto;color:var(--green);font-size:12px}
+nav{display:flex;gap:8px;padding:12px 0;overflow:auto}.chip,select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:9px 13px;font-size:13px}
+.chip.active{border-color:var(--green);color:var(--green)}
+main{flex:1;padding:8px 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.metric{background:var(--panel2);border-radius:12px;padding:10px}.metric b{display:block;font-size:16px;margin-top:4px}
+.chat{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.msg{padding:12px 13px;border-radius:15px;max-width:91%;line-height:1.45;white-space:pre-wrap}
+.ai{background:var(--panel2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.user{background:#164c43;align-self:flex-end;border-bottom-right-radius:5px}
+.composer{display:flex;gap:8px;position:sticky;bottom:0;padding:10px 0 calc(10px + env(safe-area-inset-bottom));background:var(--bg)}
+input{min-width:0;flex:1;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--text);font:inherit}
+button{border:0;border-radius:13px;background:var(--green);color:#062319;font-weight:750;padding:0 15px;font-size:14px}
+button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:12px}
+button:disabled{opacity:.5}
+#mic{font-size:18px;min-width:46px}
+.smallbtn{padding:8px 11px;font-size:12px}
+.warn{border-left:3px solid #e5b65b;padding:10px 12px;background:#332b1b;border-radius:8px;color:#f6dfb0;font-size:12px;line-height:1.4}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 0 16px}
+.hidden{display:none}
+@media(min-width:650px){.app{padding-left:22px;padding-right:22px}.msg{max-width:80%}}
+</style>
+</head>
+<body><div class="app">
+<header><div class="logo">◈</div><div><div class="brand">CANDLE AI</div><div class="sub">Personal Forex Assistant · Hinglish</div></div><div class="status">● Prototype</div></header>
+<nav><button class="chip active" data-tab="chat">Chat</button><button class="chip" data-tab="market">Market</button><button class="chip" data-tab="settings">Settings</button></nav>
+<main>
+<section id="chat">
+ <div class="card"><div class="row"><b>Good day, trader 👋</b><span class="muted">Demo mode</span></div><p class="muted">Mujhse Hinglish mein baat karo. Voice input ke liye mic dabao.</p><div class="grid"><div class="metric"><span class="muted">Watchlist</span><b>3 pairs</b></div><div class="metric"><span class="muted">Analysis</span><b>SMC + ICT</b></div><div class="metric"><span class="muted">Execution</span><b>Manual only</b></div></div></div>
+ <div class="chat" id="messages"><div class="msg ai">Bro! Main Candle AI hoon. Abhi demo mode mein hoon — live broker data ya real AI backend connected nahi hai.\n\nTum EURUSD, GBPUSD ya XAUUSD ke baare mein pooch sakte ho, ya chart screenshot/data upload workflow next phase mein connect kar sakte hain.</div></div>
+</section>
+<section id="market" class="hidden">
+ <div class="card"><b>Forex watchlist</b><p class="muted">Abhi live prices nahi — broker/data source select hone ke baad connect hoga.</p>
+ <div class="grid"><div class="metric">EURUSD<b>—</b></div><div class="metric">GBPUSD<b>—</b></div><div class="metric">XAUUSD<b>—</b></div></div></div>
+ <div class="card"><b>Analysis pipeline</b><p class="muted">Candle OHLC → structure → liquidity → FVG / OB candidates → AI explanation.</p><div class="warn">Prototype signals nahi deta. Live feed connect hone aur rules backtest hone tak isse trading decision ke liye use mat karna.</div></div>
+</section>
+<section id="settings" class="hidden">
+ <div class="card"><b>Preferences</b><p class="muted">Language: Hinglish · Communication: Text + Voice</p><label class="muted">Preferred timeframe</label><p><select id="tf"><option>M15</option><option selected>H1</option><option>H4</option><option>M5</option></select></p>
+ <label class="muted">Broker / data source</label><p><select id="broker"><option>Not decided</option><option>MT5 via cloud VPS</option><option>TradingView webhook</option><option>Broker API</option></select></p>
+ <div class="warn">MT5 ka official Python bridge terminal se connect hota hai. Mobile app akela us Python bridge ko host nahi karta; live integration ke liye cloud/VPS connector ya broker-supported API chahiye.</div></div>
+</section>
+</main>
+<div class="composer" id="composer"><button id="mic" class="secondary" aria-label="Voice input">🎙️</button><input id="prompt" placeholder="Bro, EURUSD ka analysis karo..." autocomplete="off"><button id="send">Send</button></div>
+<footer>Educational prototype · No live data · No trade execution · Never share broker passwords</footer>
+</div>
+<script>
+const messages=document.getElementById('messages'), input=document.getElementById('prompt');
+function add(text,cls){const d=document.createElement('div');d.className='msg '+cls;d.textContent=text;messages.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'end'});return d}
+function reply(q){
+ const s=q.toLowerCase();
+ if(/eurusd|gbpusd|xauusd|gold|forex/.test(s)) return "Bro, pair samajh gaya. Live market feed abhi connected nahi hai, isliye main current BUY/SELL ya price claim nahi karunga. Data connect hone par main trend, BOS/CHOCH, liquidity sweep, FVG/OB candidates aur invalidation explain karunga. Abhi chart screenshot ya OHLC data share karoge to uska analysis kar sakte hain.";
+ if(/liquidity|sweep|stop hunt/.test(s)) return "Liquidity analysis mein recent swing highs/lows, equal highs/lows aur sweep ke baad candle close dekhenge. Sirf wick cross hona confirmed reversal nahi hota — displacement aur structure shift ka wait zaroori hai.";
+ if(/bos|choch|structure/.test(s)) return "Market structure ke liye confirmed swing points identify karenge. BOS trend continuation ka candidate hai; CHOCH possible character shift. Swing sensitivity aur timeframe ke rules configure karne honge.";
+ if(/hello|hi|salam|bro/.test(s)) return "Haan bro! Batao kis pair aur timeframe par kaam karna hai? Main Hinglish mein explain karunga.";
+ return "Samajh gaya bro. Main is prototype mein abhi canned demo replies de raha hoon, real AI brain abhi connect nahi hai. Next backend phase mein secure AI API, conversation memory aur live market context add karenge.";
+}
+function send(){const q=input.value.trim();if(!q)return;add(q,'user');input.value='';const r=reply(q);add(r,'ai');if('speechSynthesis' in window){/* voice playback is user-triggered below */}}
+document.getElementById('send').onclick=send;input.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));['chat','market','settings'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==b.dataset.tab));document.getElementById('composer').classList.toggle('hidden',b.dataset.tab!=='chat')});
+const mic=document.getElementById('mic');
+mic.onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){add("Is browser mein speech recognition available nahi hai. Android Chrome par microphone permission check karo; warna keyboard voice typing use karo.",'ai');return;}const rec=new SR();rec.lang='hi-IN';rec.interimResults=false;rec.onresult=e=>{input.value=e.results[0][0].transcript;send()};rec.onerror=()=>add("Mic permission ya speech service issue. Browser permission allow karke dobara try karo.",'ai');rec.start();};
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
